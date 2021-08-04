@@ -1,0 +1,187 @@
+<html>
+    <head>
+        <title>Screen Recorder</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+        <style>
+            .loader,
+            .loader:after {
+            border-radius: 50%;
+            width: 10em;
+            height: 10em;
+            }
+            .loader {
+            margin: 60px auto;
+            font-size: 10px;
+            position: relative;
+            text-indent: -9999em;
+            border-top: 1.1em solid rgba(255, 255, 255, 0.2);
+            border-right: 1.1em solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1.1em solid rgba(255, 255, 255, 0.2);
+            border-left: 1.1em solid #ffffff;
+            -webkit-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-animation: load8 1.1s infinite linear;
+            animation: load8 1.1s infinite linear;
+            }
+            @-webkit-keyframes load8 {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+            }
+            @keyframes load8 {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+            }
+
+            body {
+                /** font-family: 'Noto Sans TC', sans-serif; **/
+                font-family: 'Nunito', 'Noto Sans TC', sans-serif;
+                font-weight: 300;
+                background-image: url("images/background.png");
+                background-size: 100% 100%;
+                user-select: none; 
+            }
+            .main {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+            }
+            .main-card {
+                width: 100%;
+                height: 100%;
+                max-width: 900px;
+                max-height: 600px;
+                padding: 20px;
+                border: none;
+                border-radius: 6.6px;
+                background-color: rgba(255, 255, 255, 0.75);
+                backdrop-filter: blur(40px);
+                -webkit-box-shadow: 0px 15px 20px -8px rgba(0,0,0,0.18); 
+                box-shadow: 0px 15px 20px -8px rgba(0,0,0,0.18);
+                /*-webkit-box-shadow: 0px 0px 18px 6px rgba(0,0,0,0.08); */
+                /*box-shadow: 0px 0px 18px 6px rgba(0,0,0,0.08);*/
+            }
+            .main-card-row {
+                height: 100%;
+            }
+            .main-card-col {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .main-card-icon-col {
+                justify-content: center;
+            }
+            .icon {
+                color: rgb(39, 101, 192);
+                filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.2));
+            }
+            .title {
+                font-family: 'Nunito', 'Noto Sans TC', sans-serif;
+                font-weight: bold;
+            }
+            .title-beta {
+                font-family: 'Nunito', 'Noto Sans TC', sans-serif;
+                font-weight: bold;
+                color: gray;
+            }
+            .start-button {
+                padding-left: 44px;
+                padding-right: 44px;
+            }
+            /*.btn:focus {*/
+            /*    box-shadow: none !important;*/
+            /*}*/
+            /*.btn:active {*/
+            /*    box-shadow: 0 0 0 1px white, 0 0 0 3px black !important;*/
+            /*}*/
+            .btn-primary {
+                background-color: rgb(39, 101, 192);
+                border-color: rgb(39, 101, 192);
+            }
+            .btn-primary:hover {
+                background-color: rgb(18, 48, 103);
+            }
+            .footer {
+                width: 100%;
+                max-width: 900px;
+                color: gray;
+                margin-top: 14px;
+                margin-left: 14px;
+                font-size: 9px;
+            }
+            @media only screen and (max-width: 600px) {\
+                .main-card {
+                    max-height: none !important;
+                }
+            }
+        </style>
+        <script>
+            document.oncontextmenu = function(){
+                event.returnValue = false;
+            }
+        </script>
+    </head>
+    <body>
+        <div class="main animate__animated animate__zoomIn animate__faster">
+            <!-- <div class="loading animate__animated animate__fadeOut animate__delay-2s animate__faster">
+                <div class="loader">Loading...</div>
+            </div> -->
+            <div class="card main-card">
+                <div class="card-body">
+                    <div class="row main-card-row">
+                        <div class="col main-card-col main-card-icon-col">
+                            <div class="icon">
+                                <i class="fas fa-video fa-9x"></i>
+                            </div>
+                        </div>
+                        <div class="col main-card-col">
+                            <div style="display:flex;">
+                                <h2 class="title">OScreenRecorder</h1>
+                                &nbsp;&nbsp;
+                                <h5 class="title-beta">BETA</h5>
+                            </div>
+                            <div style="display:flex;flex-direction:column;">
+                                <p>在線錄製屏幕，無需下載客戶端，無限時長，無需費用。</p>
+                                <p>支持視頻檔案下載(*.webm)，支持全螢幕、視窗、分頁錄製。</p>
+                            </div>
+                            <div style="display:flex;width:100%;flex-direction:row;justify-content:flex-end;">
+                                <button type="button" class="btn btn-primary start-button">開始</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">Copyright © 2021 CISH Networking Team</div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    </body>
+</html>
