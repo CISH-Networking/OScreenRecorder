@@ -173,6 +173,39 @@
             ul.option > li.select > p {
                 color: lightgray;
             }
+            .recorder-main {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 14px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                background: rgb(32, 33, 36);
+                color: white;
+                z-index: 1000;
+            }
+            .status-badge {
+                background: rgba(0, 0, 0, 0.7);
+                color: white;
+                padding-top: 6px;
+                padding-bottom: 6px;
+                padding-left: 20px;
+                padding-right: 20px;
+                border-radius: 5px;
+                font-size: 14px;
+            }
+            .recorder-video {
+                /** width: 100%; **/
+                background: black;
+                border-radius: 5px;
+                -webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+                box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+            }
             .fullscreen-tip {
                 position: fixed;
                 top: 0;
@@ -213,7 +246,7 @@
         </script>
     </head>
     <body>
-        <div class="main animate__animated animate__zoomIn animate__faster">
+        <div class="main animate__animated animate__zoomIn animate__faster" id="main" style="display:none;">
             <!-- <div class="loading animate__animated animate__fadeOut animate__delay-2s animate__faster">
                 <div class="loader">Loading...</div>
             </div> -->
@@ -357,6 +390,17 @@
             <div class="footer">Copyright © 2021 CISH Networking Team</div>
         </div>
 
+        <div class="recorder-main animate__animated animate__zoomIn animate__faster" id="recorder-main" style="display:none;">
+            <div style="display:flex;flex-wrap:nowrap;flex-direction:row;justify-content:center;align-content:center;height:90%;">
+                <video class="recorder-video" id="recorder-video" autoplay muted>
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div style="display:flex;height:60px;">
+                現在時間 | qwq
+            </div>
+        </div>
+
         <div class="fullscreen-tip" id="prepare-tips" style="display:none;">
             <div style="position:absolute;top:80%;width:100%;opacity:0.9;">
                 <h1>請在彈出的視窗中選取要錄製的畫面及音訊</h1>
@@ -365,6 +409,8 @@
         </div>
 
         <script type="text/javascript">
+            var is_confirm = false;
+
             var pages = ['#welcome', '#select-capture-mode', '#select-audio-mode', '#other-settings'];
 
             function changePage(pageNumber) {
@@ -424,13 +470,23 @@
                 }
             });
 
+            var audioElement = document.createElement('audio');
+
             function prepare() {
                 $('#prepare-tips').fadeIn();
                 createRecorder();
             }
 
-            function cancel() {
+            function hideTips() {
                 $('#prepare-tips').fadeOut('fast');
+            }
+
+            function showRecorderUI() {
+                $('#main').hide();
+                $('#recorder-main').show();
+                audioElement.setAttribute('src', 'sounds/start.mp3');
+                audioElement.play();
+                is_confirm = true;
             }
 
             $('#prepare').click(function () {
@@ -442,11 +498,13 @@
             async function createRecorder() {
                 try {
                     stream = await navigator.mediaDevices.getDisplayMedia({
-                    video:{
-                        cursor: "always",
-                        mediaSource: "screen"
-                    }
+                    video: {
+                        cursor: "always"
+                    },
+                    audio: true
                     });
+
+                    document.getElementById("recorder-video").srcObject = stream;
 
                     recorder = new MediaRecorder(stream);
 
@@ -470,8 +528,11 @@
                         }
                     };
 
+                    var completeBlob = null;
                     const chunks = [];
-                    recorder.ondataavailable = e => chunks.push(e.data);
+                    recorder.ondataavailable = e => {
+                        chunks.push(e.data);
+                    }
                     /**
                     recorder.onstop = e => {
                       const completeBlob = new Blob(chunks, { type: chunks[0].type });
@@ -485,15 +546,30 @@
 
                     recorder.start();
                     **/
+                    showRecorderUI();
                 } catch (e) {
-                    console.log(e.name);
+                    console.log(e);
                     if(e.name == "NotAllowedError") {
-                        cancel();
                     }else{
-                        alert("發生未知錯誤，請重新整理後再試！");
+                        alert("發生未知錯誤，請重新整理後再試！\n(" + e.name + ")");
                     }
+                } finally {
+                    hideTips();
                 }
-              }
+            }
+
+
+            $(window).bind('beforeunload', function (event) {
+                if(is_confirm !== false) {
+                    var message = '尚未結束錄影，現在離開可能導致錄影丟失.';
+                    event.returnValue = message;
+                    return message;
+                }
+            });
+
+            $(document).ready(function() {
+                $('#main').show();
+            });
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     </body>
