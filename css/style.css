@@ -288,6 +288,10 @@ ul.videos-list > li.select > p {
     font-size: 9px;
     text-align: left;
 }
+.footer a {
+    color:rgb(39, 101, 192);
+    text-decoration: none;
+}
 @media only screen and (max-width: 600px) {
     .main-card {
         max-height: none !important;
