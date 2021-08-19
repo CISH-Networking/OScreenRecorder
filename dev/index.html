@@ -1,244 +1,24 @@
 <html>
     <head>
-        <title>Screen Recorder</title>
+        <title>OScreenRecorder</title>
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
+        <link rel="shortcut icon" href="favicon.ico">
+        <link rel="icon" type="image/png" href="icon.png">
+
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+        <link rel="stylesheet" href="css/style.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="js/jquery.animateCSS.min.js"></script>
 
-        <style>
-            .loader,
-            .loader:after {
-            border-radius: 50%;
-            width: 10em;
-            height: 10em;
-            }
-            .loader {
-            margin: 60px auto;
-            font-size: 10px;
-            position: relative;
-            text-indent: -9999em;
-            border-top: 1.1em solid rgba(255, 255, 255, 0.2);
-            border-right: 1.1em solid rgba(255, 255, 255, 0.2);
-            border-bottom: 1.1em solid rgba(255, 255, 255, 0.2);
-            border-left: 1.1em solid #ffffff;
-            -webkit-transform: translateZ(0);
-            -ms-transform: translateZ(0);
-            transform: translateZ(0);
-            -webkit-animation: load8 1.1s infinite linear;
-            animation: load8 1.1s infinite linear;
-            }
-            @-webkit-keyframes load8 {
-            0% {
-                -webkit-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-            100% {
-                -webkit-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-            }
-            @keyframes load8 {
-            0% {
-                -webkit-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-            100% {
-                -webkit-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-            }
-
-            html, body {
-                /** font-family: 'Noto Sans TC', sans-serif; **/
-                font-family: 'Nunito', 'Noto Sans TC', sans-serif;
-                font-weight: 300;
-                background-image: url("images/background.png");
-                background-size: 100% 100%;
-                user-select: none; 
-                overflow-x: hidden;
-            }
-            .main {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                width: 100%;
-                height: 100%;
-            }
-            .main-card {
-                width: 100%;
-                height: 100%;
-                max-width: 900px;
-                max-height: 600px;
-                padding: 20px;
-                border: none;
-                border-radius: 6.6px;
-                background-color: rgba(255, 255, 255, 0.75);
-                backdrop-filter: blur(40px);
-                -webkit-box-shadow: 0px 15px 20px -8px rgba(0,0,0,0.18); 
-                box-shadow: 0px 15px 20px -8px rgba(0,0,0,0.18);
-                /*-webkit-box-shadow: 0px 0px 18px 6px rgba(0,0,0,0.08); */
-                /*box-shadow: 0px 0px 18px 6px rgba(0,0,0,0.08);*/
-            }
-            .main-card-row {
-                height: 100%;
-            }
-            .main-card-col {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                justify-content: space-between;
-            }
-            .main-card-icon-col {
-                justify-content: center;
-            }
-            .icon {
-                color: rgb(39, 101, 192);
-                filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.2));
-            }
-            .title {
-                font-family: 'Nunito', 'Noto Sans TC', sans-serif;
-                font-weight: bold;
-            }
-            .title-beta {
-                font-family: 'Nunito', 'Noto Sans TC', sans-serif;
-                font-weight: bold;
-                color: gray;
-            }
-            .start-button {
-                padding-left: 44px;
-                padding-right: 44px;
-            }
-            /*.btn:focus {*/
-            /*    box-shadow: none !important;*/
-            /*}*/
-            /*.btn:active {*/
-            /*    box-shadow: 0 0 0 1px white, 0 0 0 3px black !important;*/
-            /*}*/
-            .btn-primary {
-                background-color: rgb(39, 101, 192);
-                border-color: rgb(39, 101, 192);
-            }
-            .btn-primary:hover {
-                background-color: rgb(18, 48, 103);
-            }
-            .form-select {
-                border: none;
-                background-color: rgba(0, 0, 0, 0.04);
-            }
-            ul.option {
-                padding: 0;
-                margin: 0;
-            }
-            ul.option > li {
-                list-style-type: none;
-                padding: 16px;
-                margin-bottom: 6px;
-                border-radius: 4px;
-                transition-duration: 200ms;
-                transition-property: background, color;
-            }
-            ul.option > li[disabled] {
-                opacity: 0.3;
-            }
-            ul.option > li:hover:not([disabled]):not(.select) {
-                background: rgba(0, 0, 0, 0.04);
-            }
-            ul.option > li:active:not([disabled]) {
-                color: white;
-                background: rgb(18, 48, 103);
-            }
-            ul.option > li.select {
-                color: white;
-                background: rgb(39, 101, 192);
-            }
-            ul.option > li > p {
-                color: gray;
-                transition-duration: 200ms;
-                transition-property: background, color;
-            }
-            ul.option > li:active:not([disabled]) > p {
-                color: lightgray;
-            }
-            ul.option > li.select > p {
-                color: lightgray;
-            }
-            .recorder-main {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                margin: 0;
-                padding: 14px;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                align-items: center;
-                background: rgb(32, 33, 36);
-                color: white;
-                z-index: 1000;
-            }
-            .status-badge {
-                background: rgba(0, 0, 0, 0.7);
-                color: white;
-                padding-top: 6px;
-                padding-bottom: 6px;
-                padding-left: 20px;
-                padding-right: 20px;
-                border-radius: 5px;
-                font-size: 14px;
-            }
-            .recorder-video {
-                /** width: 100%; **/
-                background: black;
-                border-radius: 5px;
-                -webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-                box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-            }
-            .fullscreen-tip {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                margin: 0;
-                padding: 0;
-                text-align: center;
-                background: rgba(0, 0, 0, 0.7);
-                backdrop-filter: blur(10px);
-                color: white;
-                z-index: 99999;
-            }
-            .footer {
-                width: 100%;
-                max-width: 900px;
-                color: gray;
-                margin-top: 14px;
-                margin-bottom: 14px;
-                margin-left: 14px;
-                font-size: 9px;
-                text-align: left;
-            }
-            @media only screen and (max-width: 600px) {
-                .main-card {
-                    max-height: none !important;
-                }
-                .footer {
-                    text-align: center;
-                }
-            }
-        </style>
         <script>
             document.oncontextmenu = function(){
                 event.returnValue = false;
@@ -250,7 +30,7 @@
             <!-- <div class="loading animate__animated animate__fadeOut animate__delay-2s animate__faster">
                 <div class="loader">Loading...</div>
             </div> -->
-            <div class="card main-card">
+            <div class="card main-card" id="main-card">
                 <div class="card-body">
 
                     <div id="welcome">
@@ -333,7 +113,7 @@
                                                 影片將不會有任何聲音。
                                             </p>
                                         </li>
-                                        <li>
+                                        <li disabled>
                                             <h6>擷取麥克風音訊</h6>
                                             <p>
                                                 擷取電腦上的麥克風聲音。
@@ -369,7 +149,7 @@
                                 </div>
                                 <div style="display:flex;flex-direction:column;width:100%;">
                                     <h6><i class="fas fa-mouse-pointer"></i> 游標</h6>
-                                    <select class="form-select form-select-lg mb-3">
+                                    <select class="form-select form-select-lg mb-3" id="cursor-mode">
                                         <option value="0" selected>總是顯示</option>
                                         <option value="1">移動時顯示</option>
                                         <option value="2">不顯示</option>
@@ -378,7 +158,7 @@
                                 <div style="display:flex;width:100%;flex-direction:row;justify-content:flex-end;">
                                     <button type="button" class="btn back">上一步</button>
                                     &nbsp;&nbsp;
-                                    <button type="button" class="btn btn-primary start-button" id="prepare">請求錄製權限</button>
+                                    <button type="button" class="btn btn-primary start-button" id="prepare">啟動錄製</button>
                                 </div>
                             </div>
                         </div>
@@ -387,18 +167,44 @@
 
                 </div>
             </div>
+
+            <div class="card main-card recorder-main-card animate__animated animate__zoomIn animate__faster" id="recorder-main-card" style="display:none;">
+                <div class="video-container" id="recorder-video-container" style="display:none;">
+                    <video class="recorder-video" id="recorder-video" width="100%" autoplay muted>
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="recorder-controls">
+                    <div style="width:25%;flex-direction:row;align-items: center;">
+                        <span style="font-weight:bold;">OScreenRecorder</span>
+                        <span id="recorder-status-text" style="color:gray;margin-left: 10px;font-size: 9px;"></span>
+                    </div>
+                    <div>
+                        <div id="recorder-controls-stopped">
+                            <button type="button" class="btn btn-primary" id="recorder-start" data-toggle="tooltip" data-placement="top" title="錄製">&nbsp;&nbsp;<i class="fas fa-circle"></i>&nbsp;&nbsp;</button>
+                        </div>
+                        <div id="recorder-controls-recording" style="display:none;">
+                            <button type="button" class="btn" id="recorder-pause" data-toggle="tooltip" data-placement="top" title="暫停"><i class="fas fa-pause"></i></button>
+                            &nbsp;&nbsp;
+                            <button type="button" class="btn btn-danger" id="recorder-stop" data-toggle="tooltip" data-placement="top" title="停止">&nbsp;&nbsp;<i class="fas fa-stop"></i>&nbsp;&nbsp;</button>
+                        </div>
+                    </div>
+                    <div style="width:25%;flex-direction:row-reverse;">
+                        <button type="button" class="btn" id="minimize-recorder"><i class="fas fa-th-list" id="minimize-icon"></i></button>
+                    </div>
+                </div>
+                <div class="recorder-card-body recorder-videos-list" id="videos-list-container" style="display:none;">
+                    <ul class="videos-list" id="videos-list"></ul>
+                </div>
+            </div>
+
             <div class="footer">Copyright © 2021 CISH Networking Team</div>
         </div>
 
-        <div class="recorder-main animate__animated animate__zoomIn animate__faster" id="recorder-main" style="display:none;">
-            <div style="display:flex;flex-wrap:nowrap;flex-direction:row;justify-content:center;align-content:center;height:90%;">
-                <video class="recorder-video" id="recorder-video" autoplay muted>
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-            <div style="display:flex;height:60px;">
-                現在時間 | qwq
-            </div>
+        <div class="fullscreen-tip video-preview" id="video-preview" style="display:none;">
+            <video class="video-preview-video animate__animated animate__zoomIn animate__faster" id="video-preview-video" autoplay controls>
+                Your browser does not support the video tag.
+            </video>
         </div>
 
         <div class="fullscreen-tip" id="prepare-tips" style="display:none;">
@@ -408,169 +214,8 @@
             </div>
         </div>
 
-        <script type="text/javascript">
-            var is_confirm = false;
-
-            var pages = ['#welcome', '#select-capture-mode', '#select-audio-mode', '#other-settings'];
-
-            function changePage(pageNumber) {
-                pages.forEach(function (page) {
-                    $(page).hide();
-                });
-                $(pages[pageNumber]).fadeIn('slow');
-            }
-            var nowPage = 0;
-            $('.back').click(function () {
-                if(nowPage > 0) {
-                    nowPage--;
-                    changePage(nowPage);
-                }
-            });
-            $('.next').click(function () {
-                if(nowPage < pages.length-1) {
-                    nowPage++;
-                    changePage(nowPage);
-                }
-            });
-
-            const isPiPAvailable = () => {
-                return document.pictureInPictureEnabled || !videoElement.disablePictureInPicture;
-            }
-
-            var captureMode = 0;
-            $('#capture-option > li').each(function (index) {
-                if(!$(this).is('[disabled]')) {
-                    $(this).click(function () {
-                        $('#capture-option > li').each(function () {
-                            $(this).removeClass('select');
-                        });
-                        $(this).addClass('select');
-                        $('#select-capture-mode .next').removeAttr('disabled');
-                        captureMode = index;
-                    });
-                }
-            });
-
-            var audioMode = 0;
-            var audioIcon = ['fa-music', 'fa-volume-off', 'fa-microphone', 'fa-volume-up']
-            $('#audio-option > li').each(function (index) {
-                if(!$(this).is('[disabled]')) {
-                    $(this).click(function () {
-                        $('#audio-option > li').each(function () {
-                            $(this).removeClass('select');
-                        });
-                        $(this).addClass('select');
-                        $('#select-audio-mode .next').removeAttr('disabled');
-                        captureMode = index;
-                        audioIcon.forEach(function (icon) {
-                            $('#audio-icon').removeClass(icon);
-                        });
-                        $('#audio-icon').addClass(audioIcon[captureMode+1]);
-                    });
-                }
-            });
-
-            var audioElement = document.createElement('audio');
-
-            function prepare() {
-                $('#prepare-tips').fadeIn();
-                createRecorder();
-            }
-
-            function hideTips() {
-                $('#prepare-tips').fadeOut('fast');
-            }
-
-            function showRecorderUI() {
-                $('#main').hide();
-                $('#recorder-main').show();
-                audioElement.setAttribute('src', 'sounds/start.mp3');
-                audioElement.play();
-                is_confirm = true;
-            }
-
-            $('#prepare').click(function () {
-                prepare();
-            });
-
-            console.log("SupportPiP:" + isPiPAvailable());
-
-            async function createRecorder() {
-                try {
-                    stream = await navigator.mediaDevices.getDisplayMedia({
-                    video: {
-                        cursor: "always"
-                    },
-                    audio: true
-                    });
-
-                    document.getElementById("recorder-video").srcObject = stream;
-
-                    recorder = new MediaRecorder(stream);
-
-                    recorder.onerror = function(event) {
-                        let error = event.error;
-
-                        switch(error.name) {
-                          case InvalidStateError:
-                            console.log("You can't record the video right " +
-                                             "now. Try again later.");
-                            break;
-                          case SecurityError:
-                            console.log("Recording the specified source " +
-                                             "is not allowed due to security " +
-                                             "restrictions.");
-                            break;
-                          default:
-                            console.log("A problem occurred while trying " +
-                                             "to record the video.");
-                            break;
-                        }
-                    };
-
-                    var completeBlob = null;
-                    const chunks = [];
-                    recorder.ondataavailable = e => {
-                        chunks.push(e.data);
-                    }
-                    /**
-                    recorder.onstop = e => {
-                      const completeBlob = new Blob(chunks, { type: chunks[0].type });
-                      const date = new Date();
-                      const nowDate = "OScreenRecorder" + date.getFullYear().toString() + date.getMonth().toString() + date.getDay().toString() + "_" + date.getHours().toString() + date.getMinutes().toString() + date.getSeconds().toString();
-                      url = URL.createObjectURL(completeBlob);
-                      video.src = url;
-                      download.href = url;
-                      download.download = nowDate + ".webm";
-                    };
-
-                    recorder.start();
-                    **/
-                    showRecorderUI();
-                } catch (e) {
-                    console.log(e);
-                    if(e.name == "NotAllowedError") {
-                    }else{
-                        alert("發生未知錯誤，請重新整理後再試！\n(" + e.name + ")");
-                    }
-                } finally {
-                    hideTips();
-                }
-            }
-
-
-            $(window).bind('beforeunload', function (event) {
-                if(is_confirm !== false) {
-                    var message = '尚未結束錄影，現在離開可能導致錄影丟失.';
-                    event.returnValue = message;
-                    return message;
-                }
-            });
-
-            $(document).ready(function() {
-                $('#main').show();
-            });
-        </script>
+        <script src="js/fix-webm-duration.js"></script>
+        <script src="js/script.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     </body>
 </html>
